@@ -13,9 +13,12 @@ require (
 	github.com/go-stack/stack v1.6.0 // indirect
 	github.com/gogo/protobuf v1.1.1 // indirect
 	github.com/golang/protobuf v0.0.0-20170919002109-ae59567b9aab // indirect
+	github.com/google/go-cmp v0.2.0 // indirect
+	github.com/google/gopacket v1.1.15
 	github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515 // indirect
 	github.com/mattn/go-isatty v0.0.4 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
+	github.com/mdlayher/raw v0.0.0-20181016155347-fa5ef3332ca9 // indirect
 	github.com/miekg/dns v1.0.1
 	github.com/mwitkow/go-conntrack v0.0.0-20161129095857-cc309e4a2223 // indirect
 	github.com/pkg/errors v0.0.0-20170910134614-2b3a18b5f0fb // indirect

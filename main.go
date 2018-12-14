@@ -34,8 +34,8 @@ import (
 	"github.com/prometheus/common/promlog"
 	"github.com/prometheus/common/promlog/flag"
 	"github.com/prometheus/common/version"
-	"gopkg.in/alecthomas/kingpin.v2"
-	"gopkg.in/yaml.v2"
+	kingpin "gopkg.in/alecthomas/kingpin.v2"
+	yaml "gopkg.in/yaml.v2"
 
 	"github.com/prometheus/blackbox_exporter/config"
 	"github.com/prometheus/blackbox_exporter/prober"
@@ -53,10 +53,7 @@ var (
 	historyLimit  = kingpin.Flag("history.limit", "The maximum amount of items to keep in the history.").Default("100").Uint()
 
 	Probers = map[string]prober.ProbeFn{
-		"http": prober.ProbeHTTP,
-		"tcp":  prober.ProbeTCP,
-		"icmp": prober.ProbeICMP,
-		"dns":  prober.ProbeDNS,
+		"arp": prober.ProbeARP,
 	}
 )
 
@@ -121,6 +118,12 @@ func probeHandler(w http.ResponseWriter, r *http.Request, c *config.Config, logg
 	registry := prometheus.NewRegistry()
 	registry.MustRegister(probeSuccessGauge)
 	registry.MustRegister(probeDurationGauge)
+
+	// Use context to pass the "original" logger into ProbeFn
+	// THIS IS AGAINST THE BCP!!
+	// But this is the only way to keep ProbeFn signature intact
+	ctx = context.WithValue(ctx, "logger", log.With(logger, "module", moduleName))
+
 	success := prober(ctx, target, module, registry, sl)
 	duration := time.Since(start).Seconds()
 	probeDurationGauge.Set(duration)

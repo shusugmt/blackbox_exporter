@@ -48,6 +48,7 @@ type Module struct {
 	TCP     TCPProbe      `yaml:"tcp,omitempty"`
 	ICMP    ICMPProbe     `yaml:"icmp,omitempty"`
 	DNS     DNSProbe      `yaml:"dns,omitempty"`
+	ARP     ARPProbe      `yaml:"arp,omitempty"`
 }
 
 type HTTPProbe struct {
@@ -106,6 +107,10 @@ type DNSProbe struct {
 type DNSRRValidator struct {
 	FailIfMatchesRegexp    []string `yaml:"fail_if_matches_regexp,omitempty"`
 	FailIfNotMatchesRegexp []string `yaml:"fail_if_not_matches_regexp,omitempty"`
+}
+
+type ARPProbe struct {
+	SourceInterfaceName string `yaml:"source_interface_name"`
 }
 
 // UnmarshalYAML implements the yaml.Unmarshaler interface.
@@ -184,6 +189,15 @@ func (s *ICMPProbe) UnmarshalYAML(unmarshal func(interface{}) error) error {
 // UnmarshalYAML implements the yaml.Unmarshaler interface.
 func (s *QueryResponse) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	type plain QueryResponse
+	if err := unmarshal((*plain)(s)); err != nil {
+		return err
+	}
+	return nil
+}
+
+// UnmarshalYAML implements the yaml.Unmarshaler interface.
+func (s *ARPProbe) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	type plain ARPProbe
 	if err := unmarshal((*plain)(s)); err != nil {
 		return err
 	}
