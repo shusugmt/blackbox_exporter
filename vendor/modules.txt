@@ -14,6 +14,10 @@ github.com/go-logfmt/logfmt
 github.com/go-stack/stack
 # github.com/golang/protobuf v0.0.0-20170919002109-ae59567b9aab
 github.com/golang/protobuf/proto
+# github.com/google/gopacket v1.1.15
+github.com/google/gopacket
+github.com/google/gopacket/layers
+github.com/google/gopacket/pcap
 # github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515
 github.com/kr/logfmt
 # github.com/matttproud/golang_protobuf_extensions v1.0.1
